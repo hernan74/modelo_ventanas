@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -93,46 +94,62 @@ class BotonesPage extends StatelessWidget {
   }
 
   Widget _botones() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [_crearColumna1(), _crearColumna2()],
-    );
-  }
-
-  Widget _crearColumna1() {
-    return Column(
+    return Table(
       children: [
-        _crearItem(Icons.home, Colors.blue, 'General'),
-        _crearItem(Icons.home, Colors.blue, 'General'),
-        _crearItem(Icons.home, Colors.blue, 'General')
+        TableRow(
+          children: [
+            _crearBotonesRedondeados(Colors.blueAccent,Icons.border_all,'General'),
+             _crearBotonesRedondeados(Colors.purpleAccent,Icons.border_all,'Bus')
+          ]
+        ),
+        TableRow(
+          children: [
+            _crearBotonesRedondeados(Colors.pinkAccent,Icons.shop,'Buy'),
+            _crearBotonesRedondeados(Colors.blueAccent,Icons.insert_drive_file,'File')
+          ]
+        ),
+        TableRow(
+          children: [
+            _crearBotonesRedondeados(Colors.blueAccent,Icons.movie_filter,'Enterteiment'),
+            _crearBotonesRedondeados(Colors.greenAccent,Icons.cloud,'Glosary')
+          ]
+        )
       ],
     );
   }
 
-  Widget _crearColumna2() {
-    return Column(
-      children: [
-        _crearItem(Icons.home, Colors.blue, 'General'),
-        _crearItem(Icons.home, Colors.blue, 'General'),
-        _crearItem(Icons.home, Colors.blue, 'General')
-      ],
-    );
-  }
-
-  Widget _crearItem(IconData icon, Color color, String titulo) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      child: Column(
-        children: [
-          Icon(
-            icon,
-            color: color,
-          ),
-          Text(titulo),
-        ],
-      ),
-    );
+  Widget _crearBotonesRedondeados(Color color,IconData icon,String texto){
+      return ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
+          child: Container( 
+            height: 180.0,
+            margin: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color:Color.fromRGBO(62, 66, 107,0.7),
+              borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(    
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(height: 10.0,),
+                  CircleAvatar(
+                    minRadius: 30.0,
+                    backgroundColor: color,
+                    child: Icon(icon,size: 50.0,color: Colors.white,),
+                  ),
+                  Text(texto,
+                  style: TextStyle( 
+                    color: color,
+                    fontSize: 15
+                 ),
+                 ),
+                   SizedBox(height: 10.0,),
+                ],
+              ),
+            ),
+        ),
+      );
   }
 
   Widget _bottonNavigation(BuildContext context) {
